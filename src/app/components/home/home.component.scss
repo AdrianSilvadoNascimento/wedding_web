@@ -1,0 +1,34 @@
+#home {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .casal_home {
+      margin: 0;
+      width: 410px;
+      position: absolute;
+      top: -155px;
+      z-index: -1;
+    }
+
+    .logo_vermelha {
+      margin-top: 600px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+
+      a {
+        width: 100px;
+        border: 5px solid #1B2A41;
+      }
+
+      img {
+        width: 360px;
+        height: 340px;
+        border-radius: 8px;
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}

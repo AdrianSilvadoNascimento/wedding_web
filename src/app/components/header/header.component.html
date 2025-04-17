@@ -2,7 +2,16 @@
   <span></span>
   <img src="logo_nosso_casamento_azul.png" alt="Logo" width="46" height="46">
   <span></span>
-  <button mat-icon-button aria-label="Menu">
+  <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item routerLink="/" [class.active-link]="isActiveRoute('/')">Início</a>
+    <a mat-menu-item routerLink="/convidados" [class.active-link]="isActiveRoute('/convidados')">
+      Lista de Convidados
+    </a>
+    <a mat-menu-item routerLink="/presentes" [class.active-link]="isActiveRoute('/presentes')">
+      Lista de Presentes
+    </a>
+  </mat-menu>
 </mat-toolbar>

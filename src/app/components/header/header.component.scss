@@ -2,6 +2,10 @@ mat-toolbar {
   background-color: #800020;
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.5);
 
+  button {
+    color: #fff;
+  }
+  
   span {
     flex: 1;
   }

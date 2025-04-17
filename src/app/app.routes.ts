@@ -6,7 +6,7 @@ import { GiftListComponent } from './components/gift_list/gift_list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: '**', redirectTo: '' },
   { path: 'convidados', component: GuestsListComponent },
   { path: 'presentes', component: GiftListComponent },
+  { path: '**', redirectTo: '' },
 ];

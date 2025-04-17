@@ -3,14 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 420px;
+    flex-direction: column;
 
     .casal_home {
       width: 100%;
-      position: absolute;
-      left: -50%;
-      transform: translateX(50%);
-      top: -155px;
       z-index: -1;
     }
 
@@ -23,7 +19,6 @@
       position: relative;
       left: 50%;
       transform: translateX(-50%);
-      margin-top: 600px;
 
       a {
         border: 15px solid #1b2a41;
@@ -74,4 +69,32 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 768px) {
+  #home {
+    .container {
+      .casal_home {
+        width: 100%;
+        position: relative;
+      }
+
+      .main-content {
+        margin: 0 10px;
+        position: relative;
+        top: -100px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+
+        #botoes {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+    }
+  } 
 }

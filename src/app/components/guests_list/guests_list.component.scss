@@ -5,10 +5,19 @@ section.lists {
     color: #fff;
   }
 
-  .mat-column-id {
-    border-right: 1px solid currentColor;
-    width: 15px;
+  p {
+    color: #fff;
     text-align: center;
+  }
+
+  .mat-column-name {
+    border-right: 1px solid currentColor;
+  }
+
+  table.mat-elevation-z8 {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
   }
 
   article {
@@ -21,7 +30,7 @@ section.lists {
 
 @media screen and (max-width: 768px) {
   section.lists {
-    height: 75vh;
+    height: 70vh;
     
     h3 {
       font-size: 2rem;

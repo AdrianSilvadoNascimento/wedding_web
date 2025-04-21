@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Olá, Noiva(o)!</h2>
+<mat-dialog-content>
+  <form [formGroup]="guestForm">
+    <mat-form-field appearance="outline" class="custom-mat-form-field">
+      <mat-label matTooltip="Pode escrever vários nomes, separados por vírgula (',')." for="name"
+        class="custom-mat-label">Nomes dos Convidados</mat-label>
+      <input matInput type="name" class="form-control" class="custom-mat-input" name="name" id="name"
+        formControlName="name" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="custom-mat-form-field">
+      <mat-label for="is_by_hellen" class="custom-mat-label">Convidado da Noiva?</mat-label>
+      <mat-select name="is_by_hellen" id="is_by_hellen" formControlName="is_by_hellen" required>
+        <mat-option [value]="true">Sim</mat-option>
+        <mat-option [value]="false">Não</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-stroked-button type="submit" (click)="onSubmit()" [disabled]="guestForm.invalid" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>

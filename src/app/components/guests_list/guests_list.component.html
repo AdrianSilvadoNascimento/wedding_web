@@ -1,9 +1,7 @@
 <section class="lists">
   <h3>Nossos Convidados</h3>
 
-  @if (guests.length === 0) {
-    <p>Não temos convidados ainda.</p>
-  } @else {
+  @if (guests.length) {
     <article>
       <table mat-table [dataSource]="guests" class="mat-elevation-z8">
         <ng-container matColumnDef="name">

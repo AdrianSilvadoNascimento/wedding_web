@@ -16,3 +16,8 @@ body {
   top: 0;
   z-index: 1000;
 }
+
+.spinner .mdc-circular-progress__indeterminate-circle-graphic,
+.spinner .mdc-circular-progress__determinate-circle {
+  stroke: #fff !important;
+}

@@ -1,0 +1,26 @@
+h2 {
+  font-family: 'Playfair', serif;
+}
+
+.mat-mdc-dialog-content {
+  width: 400px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    margin-top: 10px;
+
+    .custom-mat-form-field {
+      width: 300px;
+      gap: 20px;
+    }
+  }
+}

@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from '../loading.service';
 
-// Variável para controlar o número de requisições ativas
 let totalRequests = 0;
 
 export const LoadingInterceptor: HttpInterceptorFn = (req, next) => {

@@ -1,6 +1,14 @@
 <section class="lists">
   <h3>Nossos Convidados</h3>
 
+  @if (!guests.length) {
+    <p class="no-guests">Nenhum convidado encontrado.</p>
+  }
+  
+  @if (isLogged) {
+    <button class="button" (click)="createGuestDialog()" mat-stroked-button>+ Adicionar Convidado</button>
+  }
+
   @if (guests.length) {
     <article>
       <table mat-table [dataSource]="guests" class="mat-elevation-z8">
@@ -12,7 +20,21 @@
           <th mat-header-cell mat-sort-header *matHeaderCellDef>Convidado da(o)</th>
           <td mat-cell *matCellDef="let element"> {{ element.is_by_hellen ? 'Noiva' : 'Noivo' }} </td>
         </ng-container>
-    
+
+        @if (isLogged) {
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="openEditDialog(element.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteGuest(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        }
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

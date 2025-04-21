@@ -18,11 +18,11 @@
       />
 
       <div id="botoes">
-        <a mat-fab extended routerLink="/convidados">
+        <a mat-fab extended [routerLink]="guestsRoute">
           Lista de Convidados
         </a>
 
-        <a mat-fab extended routerLink="/presentes">
+        <a mat-fab extended [routerLink]="giftsRoute">
           Lista de Presentes
         </a>
       </div>

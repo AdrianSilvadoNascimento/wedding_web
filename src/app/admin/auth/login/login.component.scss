@@ -54,12 +54,15 @@
 
           button {
             margin-top: 20px;
-            background: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb, #a18cd1);
+            background: #1b2a41;
             color: #000;
             font-weight: 650;
+            border: 0.25px solid #fff;
+            color: #fff;
+            transition: 0.3s ease;
 
             :hover {
-              background: linear-gradient(to right, #7fb3ff, #a1d4ff, #b4ff7f, #6fe67f, #ff9ce6, #7f6cd1);
+              background: #1b2a41;
               color: #000;
               filter: brightness(2);
             }
@@ -68,6 +71,7 @@
           .disabled {
             background: #ccc !important;
             color: #4d4d4d !important;
+            transition: 0.3s ease !important;
           }
         }
       }

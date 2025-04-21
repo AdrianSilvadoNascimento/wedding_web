@@ -7,11 +7,16 @@
   </button>
   <mat-menu #menu="matMenu">
     <a mat-menu-item routerLink="/" [class.active-link]="isActiveRoute('/')">Início</a>
-    <a mat-menu-item routerLink="/convidados" [class.active-link]="isActiveRoute('/convidados')">
+    <a mat-menu-item [routerLink]="guestsRoute" [class.active-link]="isActiveRoute('guestRoute')">
       Lista de Convidados
     </a>
-    <a mat-menu-item routerLink="/presentes" [class.active-link]="isActiveRoute('/presentes')">
+    <a mat-menu-item [routerLink]="giftsRoute" [class.active-link]="isActiveRoute('giftsRoute')">
       Lista de Presentes
     </a>
+    @if (isLogged) {
+      <a mat-menu-item (click)="logout()">
+        Sair
+      </a>
+    }
   </mat-menu>
 </mat-toolbar>

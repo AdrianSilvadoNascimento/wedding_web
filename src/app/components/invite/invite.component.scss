@@ -1,0 +1,25 @@
+#invite {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .invite-section {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section#invite {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

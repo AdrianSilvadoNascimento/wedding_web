@@ -16,7 +16,13 @@ export class GuestService {
 
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+  })
+
+  private adminHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   })
 
   constructor(private http: HttpClient) { }
@@ -30,6 +36,22 @@ export class GuestService {
     return this.http.get<GuestModel[]>(`${this.apiUrl}/guest/`, { headers: this.headers }).pipe(
       tap(res => {
         this.updateGuestsData(res)
+      })
+    )
+  }
+
+  createGuest(guest: GuestModel): Observable<GuestModel> {
+    const storedGuests = localStorage.getItem('guests')
+    
+    return this.http.post<GuestModel>(`${this.apiUrl}/guest/`, guest, { headers: this.adminHeaders }).pipe(
+      tap((res: any) => {
+        if (storedGuests) {
+          const guests = JSON.parse(storedGuests)
+          guests.push(res)
+          this.updateGuestsData(guests)
+        } else {
+          this.updateGuestsData(res as GuestModel[])
+        }
       })
     )
   }

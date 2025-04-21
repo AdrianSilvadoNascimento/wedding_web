@@ -1,0 +1,93 @@
+#login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  article {
+    .form {
+      width: 100%;
+      height: calc(100vh - 100px);
+
+      .login-card {
+        height: 400px;
+        width: 350px;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        border: 0.25px solid rgba(0, 0, 0, 0.25);
+        background-color: #800020;
+
+        form {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          height: 100%;
+
+          .custom-mat-form-field,
+          button,
+          .hot-links {
+            width: 80%;
+          }
+
+          h2.auth-header {
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+          }
+
+          .hot-links {
+            display: flex;
+            justify-content: space-between;
+
+            a {
+              font-size: 12px;
+              color: #000;
+              cursor: pointer;
+              text-decoration: none;
+            }
+          }
+
+          button {
+            margin-top: 20px;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb, #a18cd1);
+            color: #000;
+            font-weight: 650;
+
+            :hover {
+              background: linear-gradient(to right, #7fb3ff, #a1d4ff, #b4ff7f, #6fe67f, #ff9ce6, #7f6cd1);
+              color: #000;
+              filter: brightness(2);
+            }
+          }
+
+          .disabled {
+            background: #ccc !important;
+            color: #4d4d4d !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  #login {
+    height: 75vh;
+
+    article {
+      .form {
+        width: 100%;
+        .login-card {
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+}

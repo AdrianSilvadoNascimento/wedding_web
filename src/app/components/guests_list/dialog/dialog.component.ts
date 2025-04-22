@@ -70,11 +70,13 @@ export class DialogComponent implements OnInit {
       this.guestService.updateGuest(this.data.id, this.guestForm.value).subscribe(() => {
         this.guestForm.reset();
         this.dialogRef.close();
+        alert('Convidado atualizado com sucesso!');
       });
     } else {
       this.guestService.createGuest(this.guestForm.value).subscribe(() => {
         this.guestForm.reset();
         this.dialogRef.close();
+        alert('Convidado criado com sucesso!');
       });
     }
   }

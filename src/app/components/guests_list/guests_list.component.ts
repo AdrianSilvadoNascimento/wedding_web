@@ -45,10 +45,7 @@ export class GuestsListComponent implements OnInit {
   createGuestDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
 
-    dialogRef.afterClosed().subscribe(() => {
-      alert('Convidado(s) registrado(s) com sucesso!');
-      this.getGuests()
-    });
+    dialogRef.afterClosed().subscribe(() => this.getGuests());
   }
 
   openEditDialog(guestId: string): void {
@@ -59,10 +56,7 @@ export class GuestsListComponent implements OnInit {
       data: { id: guest.id, name: guest.name, is_by_hellen: guest.is_by_hellen },
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      alert('Convidado(s) editado(s) com sucesso!');
-      this.getGuests()
-    });
+    dialogRef.afterClosed().subscribe(() => this.getGuests());
   }
 
   getGuests(): void {

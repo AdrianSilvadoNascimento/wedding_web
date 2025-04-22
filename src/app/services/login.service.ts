@@ -23,7 +23,7 @@ export interface LoginResponse {
 export class LoginService {
   private readonly apiUrl = environment.apiUrl;
 
-  private toggleLoggedIn = new BehaviorSubject<boolean>(true)
+  private toggleLoggedIn = new BehaviorSubject<boolean>(false)
   $toggleLoggedIn = this.toggleLoggedIn.asObservable()
 
   constructor(private http: HttpClient, private router: Router) {}

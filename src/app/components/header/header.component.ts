@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -16,28 +17,42 @@ import { LoginService } from '../../services/login.service';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
+  private loginSubscription!: Subscription;
   isLogged: boolean = false;
   guestsRoute: string = '/convidados';
   giftsRoute: string = '/presentes';
-  
-  constructor(private router: Router, private readonly loginService: LoginService) {}
+
+  constructor(
+    private router: Router,
+    private readonly loginService: LoginService
+  ) {}
 
   isActiveRoute(route: string): boolean {
     return this.router.url === route;
   }
 
+  ngOnDestroy() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit(): void {
-    this.loginService.$toggleLoggedIn.subscribe(res => {
-      this.isLogged = res;
-      this.guestsRoute = this.isLogged ? '/admin/convidados' : '/convidados';
-      this.giftsRoute = this.isLogged ? '/admin/presentes' : '/presentes';
-    })
+    this.isLogged = this.loginService.isLoggedin();
+
+    this.loginSubscription = this.loginService.$toggleLoggedIn.subscribe(
+      (res) => {
+        this.isLogged = res;
+        this.guestsRoute = this.isLogged ? '/admin/convidados' : '/convidados';
+        this.giftsRoute = this.isLogged ? '/admin/presentes' : '/presentes';
+      }
+    );
   }
 
   logout(): void {

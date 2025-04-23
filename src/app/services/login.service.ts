@@ -23,18 +23,27 @@ export interface LoginResponse {
 export class LoginService {
   private readonly apiUrl = environment.apiUrl;
 
-  private toggleLoggedIn = new BehaviorSubject<boolean>(false)
-  $toggleLoggedIn = this.toggleLoggedIn.asObservable()
+  private toggleLoggedIn = new BehaviorSubject<boolean>(this.isLoggedin());
+  $toggleLoggedIn = this.toggleLoggedIn.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  setToggleLoggedIn(value: boolean): void {
-    this.toggleLoggedIn.next(value)
+  setToggleLoggedIn(value: boolean, token?: string): void {
+    if (value && token) {
+      // Quando faz login, salva o token real
+      localStorage.setItem('token', token);
+    } else if (!value) {
+      // Quando faz logout, remove o token
+      localStorage.removeItem('token');
+    }
+
+    this.toggleLoggedIn.next(value);
   }
 
   isLoggedin(): boolean {
     const token = localStorage.getItem('token');
-    return !!token;
+
+    return !!token && token.trim() !== '';
   }
 
   login(credentials: LoginModel): Observable<any> {
@@ -42,10 +51,12 @@ export class LoginService {
       .post<any>(`${this.apiUrl}/admin`, credentials, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .pipe(tap((res: LoginResponse) => {
-        this.setCache(res.token)
-        this.setToggleLoggedIn(true)
-      }));
+      .pipe(
+        tap((res: LoginResponse) => {
+          this.setCache(res.token);
+          this.setToggleLoggedIn(true, res.token);
+        })
+      );
   }
 
   setCache(token: string): void {
@@ -53,8 +64,7 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    this.setToggleLoggedIn(false)
+    this.setToggleLoggedIn(false);
     this.router.navigate(['/admin/login']);
   }
 }

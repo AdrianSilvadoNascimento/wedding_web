@@ -1,4 +1,4 @@
-import { Component, OnInit, model, signal, inject } from '@angular/core';
+import { Component, OnInit, model, signal, inject, OnDestroy } from '@angular/core';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { GuestService } from '../../services/guest.service';
 import { GuestModel } from '../../models/guest-model';
 import { LoginService } from '../../services/login.service';
 import { DialogComponent } from './dialog/dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -17,19 +18,28 @@ import { DialogComponent } from './dialog/dialog.component';
   styleUrls: ['./guests_list.component.scss'],
   imports: [MatTableModule, MatButtonModule, MatIconModule],
 })
-export class GuestsListComponent implements OnInit {
+export class GuestsListComponent implements OnInit, OnDestroy {
   guests: GuestModel[] = []
   displayedColumns: string[] = ['name', 'is_by_hellen'];
   isLogged: boolean = false;
+  private loginSubscription!: Subscription
 
   constructor(private readonly guestService: GuestService, private readonly loginService: LoginService) { }
 
+  ngOnDestroy() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
+  }
+  
   ngOnInit(): void {
     this.guestService.getGuests().subscribe()
 
-    this.loginService.$toggleLoggedIn.subscribe(res => {
-      this.isLogged = res
-    })
+    this.isLogged = this.loginService.isLoggedin();
+
+    this.loginSubscription = this.loginService.$toggleLoggedIn.subscribe(res => {
+      this.isLogged = res;
+    });
 
     if (this.isLogged) {
       this.displayedColumns.push('actions')

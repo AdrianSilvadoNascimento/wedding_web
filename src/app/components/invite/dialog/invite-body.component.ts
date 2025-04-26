@@ -13,7 +13,7 @@ import { filter } from "rxjs";
 })
 export class InviteDialog implements OnInit {
   isPadrinho: boolean = false;
-  alias: string = 'padrinho';
+  alias: string = 'ele';
 
   constructor(private router: Router) { }
 

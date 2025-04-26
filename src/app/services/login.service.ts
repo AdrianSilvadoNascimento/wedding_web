@@ -30,10 +30,8 @@ export class LoginService {
 
   setToggleLoggedIn(value: boolean, token?: string): void {
     if (value && token) {
-      // Quando faz login, salva o token real
       localStorage.setItem('token', token);
     } else if (!value) {
-      // Quando faz logout, remove o token
       localStorage.removeItem('token');
     }
 

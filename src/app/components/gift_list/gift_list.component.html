@@ -1,2 +1,49 @@
-<h1>Lista de Presentes</h1>
-<!-- Conteúdo adicional aqui --> 
+<section class="lists">
+  <h3>Nossa Lista de Presentes</h3>
+
+  @if (!gifts.length) {
+  <p class="no-guests">Nenhum presente encontrado.</p>
+  } @if (isLogged) {
+  <button class="button" (click)="createGiftDialog()" mat-stroked-button>
+    + Adicionar Presente
+  </button>
+  } @if (gifts.length) {
+  <article>
+    <table mat-table [dataSource]="gifts" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Descrição</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Preço</th>
+        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      </ng-container>
+
+      @if (isLogged) {
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="openEditDialog(element.id)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteGift(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </article>
+  }
+</section>

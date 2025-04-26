@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Olá, Noiva(o)!</h2>
+<mat-dialog-content>
+  <form [formGroup]="giftForm">
+    <mat-form-field appearance="outline" class="custom-mat-form-field">
+      <mat-label for="name" class="custom-mat-label"
+        >Nome do Presente</mat-label
+      >
+      <input
+        matInput
+        type="name"
+        class="form-control"
+        class="custom-mat-input"
+        name="name"
+        id="name"
+        formControlName="name"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="custom-mat-form-field">
+      <mat-label for="description" class="custom-mat-label"
+        >Descrição</mat-label
+      >
+      <input
+        matInput
+        type="description"
+        class="form-control"
+        class="custom-mat-input"
+        name="description"
+        id="description"
+        formControlName="description"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="custom-mat-form-field">
+      <mat-label for="price" class="custom-mat-label"
+        >Preço do Presente</mat-label
+      >
+      <input
+        matInput
+        type="number"
+        class="form-control"
+        class="custom-mat-input"
+        name="price"
+        id="price"
+        formControlName="price"
+        required
+      />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button
+    mat-stroked-button
+    type="submit"
+    (click)="onSubmit()"
+    [disabled]="giftForm.invalid"
+    cdkFocusInitial
+  >
+    Salvar
+  </button>
+</mat-dialog-actions>

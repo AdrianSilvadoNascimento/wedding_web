@@ -33,7 +33,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "@angular/material/prebuilt-themes/azure-blue.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": []
@@ -49,13 +48,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "4MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
                 }
               ],
               "outputHashing": "all"
@@ -105,8 +104,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "@angular/material/prebuilt-themes/azure-blue.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }

@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+
+import { LucideAngularModule, Heart } from 'lucide-angular';
 import { LoginService } from '../../services/login.service';
 import { Subscription } from 'rxjs';
 
@@ -18,12 +20,15 @@ import { Subscription } from 'rxjs';
     MatMenuModule,
     MatButtonModule,
     RouterModule,
+    LucideAngularModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   private loginSubscription!: Subscription;
+  readonly heartIcon = Heart;
+  
   isLogged: boolean = false;
   guestsRoute: string = '/convidados';
   giftsRoute: string = '/presentes';

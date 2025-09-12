@@ -1,100 +1,108 @@
-#home {
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+// #home {
+//   .container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-direction: column;
 
-    .casal_home {
-      width: 100%;
-      z-index: -1;
-    }
+//     .casal_home {
+//       width: 100%;
+//       z-index: -1;
+//     }
 
-    .main-content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
+//     .main-content {
+//       width: 100%;
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: center;
+//       align-items: center;
+//       position: relative;
+//       left: 50%;
+//       transform: translateX(-50%);
 
-      a {
-        border: 15px solid #1b2a41;
-        color: white;
-        text-decoration: none;
-        font-size: 40px;
-        width: 60px;
-        height: 60px;
-        padding: 15px 15px;
-        border-radius: 50%;
-        background-color: #800020;
-        z-index: 2;
-        position: relative;
-        top: 50px;
+//       a {
+//         border: 15px solid #1b2a41;
+//         color: white;
+//         text-decoration: none;
+//         font-size: 40px;
+//         width: 60px;
+//         height: 60px;
+//         padding: 15px 15px;
+//         border-radius: 50%;
+//         background-color: #800020;
+//         z-index: 2;
+//         position: relative;
+//         top: 50px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
 
-        filter: drop-shadow(3px 4px 0.75rem rgba(0, 0, 0, 0.5));
-      }
+//         filter: drop-shadow(3px 4px 0.75rem rgba(0, 0, 0, 0.5));
+//       }
 
-      img {
-        width: 360px;
-        height: 340px;
-        border-radius: 8px;
-        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.5);
-      }
+//       img {
+//         width: 360px;
+//         height: 340px;
+//         border-radius: 8px;
+//         box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.5);
+//       }
 
-      #botoes {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 80px;
-        margin-bottom: 50px;
-        gap: 30px;
+//       #botoes {
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+//         margin-top: 80px;
+//         margin-bottom: 50px;
+//         gap: 30px;
         
-        a {
-          background-color: #800020;
-          border: 1px solid #fff;
-          color: #fff;
-          width: 280px;
-          height: 50px;
-          font-size: 18px;
-          border-radius: 8px;
-        }
-      }
-    }
+//         a {
+//           background-color: #800020;
+//           border: 1px solid #fff;
+//           color: #fff;
+//           width: 280px;
+//           height: 50px;
+//           font-size: 18px;
+//           border-radius: 8px;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// @media screen and (max-width: 768px) {
+//   #home {
+//     .container {
+//       .casal_home {
+//         width: 100%;
+//         position: relative;
+//       }
+
+//       .main-content {
+//         margin: 0 10px;
+//         position: relative;
+//         top: -100px;
+
+//         img {
+//           width: 100%;
+//           height: auto;
+//         }
+
+//         #botoes {
+//           flex-direction: column;
+//           align-items: center;
+//           gap: 20px;
+//         }
+//       }
+//     }
+//   } 
+// }
+
+#home {
+  .back {
+    background-image: url('/caricatura_noivos.jpg');
+    background-size: cover;
+    background-position: center;
   }
-}
-
-@media screen and (max-width: 768px) {
-  #home {
-    .container {
-      .casal_home {
-        width: 100%;
-        position: relative;
-      }
-
-      .main-content {
-        margin: 0 10px;
-        position: relative;
-        top: -100px;
-
-        img {
-          width: 100%;
-          height: auto;
-        }
-
-        #botoes {
-          flex-direction: column;
-          align-items: center;
-          gap: 20px;
-        }
-      }
-    }
-  } 
 }

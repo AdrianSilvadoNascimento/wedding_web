@@ -1,8 +1,31 @@
-<mat-toolbar color="primary">
-  <span></span>
-  <img src="logo_nosso_casamento_azul.png" alt="Logo" width="46" height="46">
-  <span></span>
-  <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="menu">
+<nav
+  class="fixed top-0 w-full z-50 shadow-sm bg-white opacity-95 bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300">
+  <div class="py-4 px-4 md:px-12 w-full flex flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2 animate-fade-in">
+      <lucide-icon [img]="heartIcon" class="text-[#800020] h-6 w-6 animate-pulse" />
+      <span class="font-heading font-[500] text-xl">Hellen & Adrian</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#home" class="text-lg hover:text-[#800020] transition-all duration-300 hover:scale-105">
+        Início
+      </a>
+      <a href="#save-date" class="text-lg hover:text-[#800020] transition-all duration-300 hover:scale-105">
+        Save the Date
+      </a>
+      <a href="#convidados" class="text-lg hover:text-[#800020] transition-all duration-300 hover:scale-105">
+        Convidados
+      </a>
+      <a href="#padrinhos" class="text-lg hover:text-[#800020] transition-all duration-300 hover:scale-105">
+        Padrinhos
+      </a>
+      <a href="#presentes" class="text-lg hover:text-[#800020] transition-all duration-300 hover:scale-105">
+        Presentes
+      </a>
+    </div>
+  </div>
+
+  <!-- <img src="logo_nosso_casamento_azul.png" alt="Logo" width="46" height="46"> -->
+  <!-- <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
@@ -18,5 +41,5 @@
         Sair
       </a>
     }
-  </mat-menu>
-</mat-toolbar>
+  </mat-menu> -->
+</nav>

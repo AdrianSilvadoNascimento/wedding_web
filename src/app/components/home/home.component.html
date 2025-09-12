@@ -1,31 +1,130 @@
-<section id="home">
-  <div class="container">
-    <img
-      alt="Hellen & Adrian"
-      class="casal_home"
-      [src]="isMobile ? 'foto_principal_home.png' : 'eu_e_ela_1920_1080.png'"
-    />
+<section id="home" class="mt-[60px] relative h-screen flex items-center justify-center overflow-hidden">
+  <div class="back absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20"
+    [style.transform]="getParallaxTransform()"></div>
+  <div class="absolute inset-0 bg-black/30" [style.opacity]="calculateOpacity()"></div>
 
-    <div class="main-content">
-      <a href="#botoes">
-        <i class="fas fa-arrow-down"></i>
-      </a>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    @for (element of floatingElements; track element.animationDelay) {
+    <div class="absolute w-2 h-2 bg-white/20 rounded-full animate-float" [style.left]="element.left"
+      [style.top]="element.top" [style.animation-delay]="element.animationDelay"
+      [style.animation-duration]="element.animationDuration">
+    </div>
+    }
+  </div>
 
-      <img
-        class="logo_vermelha"
-        src="logo_nosso_casamento_vermelho.png"
-        alt="Hellen & Adrian"
-      />
+  <div class="relative z-10 text-center text-white px-4 transition-all duration-1000 animate-delay-200"
+    [class.animate-fade-in-up]="visibleSections.has('home')"
+    [class]="!visibleSections.has('home') ? 'opacity-0 translate-y-10' : ''">
+    <div class="hero-title font-bold text-6xl md:text-8xl mb-4 animate-title-glow">Hellen & Adrian</div>
+    <p class="text-xl md:text-2xl mb-2 font-light font-open-sans animate-fade-in-up animation-delay-300">
+      Celebram seu amor
+    </p>
+    <p class="text-lg md:text-xl mb-8 font-semibold opacity-90 font-open-sans animate-fade-in-up animation-delay-500">
+      06 de Setembro de 2026
+    </p>
+    <button
+      class="bg-[#800020] rounded-md text-white px-8 py-3 text-lg font-semibold animation-delay-700 transform transition-all duration-300 hover:bg-[#800020]/90 hover:scale-105 hover:shadow-lg hover:shadow-accent/25">
+      Save the Date
+    </button>
+  </div>
+</section>
 
-      <div id="botoes">
-        <a mat-fab extended class="button" [routerLink]="guestsRoute">
-          Lista de Convidados
-        </a>
+<section id="save-date" class="py-20 bg-gray-50 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 animate-gradient-shift"></div>
 
-        <a mat-fab extended class="button" [routerLink]="giftsRoute">
-          Lista de Presentes
-        </a>
+  <div class="max-w-7xl mx-auto px-4 relative z-10">
+    <div class="text-center mb-16 transition-all duration-1000" [class.opacity-0]="!visibleSections.has('save-date')"
+      [class.translate-y-10]="!visibleSections.has('save-date')">
+      <h2 class="text-4xl text-[#1B2A41] md:text-5xl font-heading font-bold mb-4">Save the Date</h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Marque em sua agenda este momento especial. Será um dia inesquecível e queremos compartilhar nossa alegria
+        com você.
+      </p>
+    </div>
+
+    <div class="bg-gradient-to-r from-[#800020] to-[#1B2A41] p-8 rounded-2xl text-white mb-12 text-center transition-all
+      duration-1000 hover:scale-105 hover:shadow-2xl" [class.animation-delay-300]="visibleSections.has('save-date')"
+      [class.opacity-0]="!visibleSections.has('save-date')" [class.translate-y-10]="!visibleSections.has('save-date')">
+      <h3 class="text-2xl md:text-3xl font-heading font-bold mb-8">Contagem Regressiva</h3>
+
+      @if (timeLeftArray.length > 0) {
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        @for (item of timeLeftArray; track item.label; let index = $index) {
+        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 hover:bg-white/30 transition-all
+              duration-300 animate-fade-in-up" [style.animation-delay]="index + 1 + '00ms'">
+          <div class="text-3xl md:text-4xl font-bold animate-number-change">{{item.value}}</div>
+          <div class="text-sm md:text-base opacity-90">{{item.label}}</div>
+        </div>
+        }
       </div>
+      }
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 transition-all duration-1000"
+      [class.animate-fade-in-up]="visibleSections.has('save-date')"
+      [class.animation-delay-500]="visibleSections.has('save-date')"
+      [class.opacity-0]="!visibleSections.has('save-date')" [class.translate-y-10]="!visibleSections.has('save-date')">
+
+      @for (card of cards; track card.title; let index = $index) {
+      <div class="rounded-2xl bg-white border border-gray-200 hover:shadow-lg hover:scale-105 transition-all
+        duration-300" [class.md:col-span-2]="index === 2" [class.lg:col-span-1]="index === 2">
+        <div class="p-8 text-center">
+          <lucide-icon [img]="card.icon" class="h-12 w-12 text-[#800020] mx-auto mb-4 animate-bounce-subtle" />
+          <h3 class="text-xl font-heading text-[#1B2A41] font-semibold mb-4">{{card.title}}</h3>
+          <div class="space-y-2">
+            @for (text of card.content; track text; let i = $index) {
+            <p [class]="i === 0 ? 'text-lg font-semibold text-[#1B2A41]' : 'text-sm text-gray-500'">{{text}}</p>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="max-w-2xl mx-auto mb-0 md:mb-12">
+      <div
+        class="rounded-2xl px-6 py-8 bg-white border boder-gray-200 hover:shadow-lg hover:scale-105 transition-all duration-500">
+        <h2 class="text-center text-lg md:text-2xl text-[#1B2A41] font-bold mb-4">Informações Importantes</h2>
+        <ul class="list-disc list-inside">
+          <li class="text-sm text-gray-500 mb-2">
+            Confirmação de presenção até 30 de junho de 2026.
+          </li>
+          <li class="text-sm text-gray-500 mb-2">
+            Recepção às 14:00h.
+          </li>
+          <li class="text-sm text-gray-500 mb-2">
+            Lembre-se: Convidado não convida.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cards" class="py-20">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl md:text-4xl font-bold text-center text-[#1B2A41] mb-12 transition-all duration-1000"
+      [class]="visibleSections.has('cards') ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'">
+      Informações do Casamento
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (card of quickCards; track card.title; let index = $index) {
+      <div
+        class="bg-white rounded-xl border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-500 cursor-pointer group"
+        [style.animation-delay]="index * 150 + 'ms'">
+        <div class="p-6 text-center">
+          <lucide-icon [img]="card.icon"
+            class="h-12 w-12 text-[#1B2A41] mx-auto mb-4 group-hover:text-[#800020] transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
+          <h3
+            class="text-xl text-[#1B2A41] font-heading font-semibold mb-2 group-hover:text-[#800020] transition-colors duration-300">
+            {{card.title}}
+          </h3>
+          <p class="text-gray-500 transition-colors duration-300">
+            {{card.description}}
+          </p>
+        </div>
+      </div>
+      }
     </div>
   </div>
 </section>

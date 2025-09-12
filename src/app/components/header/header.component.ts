@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+
+import { LucideAngularModule, Heart } from 'lucide-angular';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -16,12 +18,15 @@ import { LoginService } from '../../services/login.service';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    LucideAngularModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+  readonly heartIcon = Heart;
+  
   isLogged: boolean = false;
   guestsRoute: string = '/convidados';
   giftsRoute: string = '/presentes';

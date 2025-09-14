@@ -1,43 +1,195 @@
-<section class="lists">
-  <h3>Nossos Convidados</h3>
+<section id="guests-list" class="mt-[60px] relative min-h-[calc(100vh-300px)] pb-8">
+  <div class="header text-center mb-12">
+    <h1 class="text-5xl text-[#1B2A41] font-bold pt-12 mb-2">
+      Lista de Convidados
+    </h1>
+    <p class="text-lg text-gray-600">
+      Encontre seu nome na lista e veja onde você estará sentado durante nossa celebração
+    </p>
+  </div>
 
-  @if (!guests.length) {
-    <p class="no-guests">Nenhum convidado encontrado.</p>
-  }
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-1 space-y-6">
+        <div class="bg-gray-50 rounded-md p-4 border border-border">
+          <div>
+            <div class="flex items-center gap-2 text-[#1B2A41] mb-2">
+              <lucide-icon [img]="searchIcon" class="h-5 w-5" />
+              <span class="font-semibold text-md">
+                Buscar Convidado
+              </span>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <input placeholder="Digite o nome do convidado..." [value]="searchTerm" (change)="setSearchTerm($event)"
+              class="w-full p-2 rounded-md border border-border" />
   
-  @if (isLogged) {
-    <button class="button" (click)="createGuestDialog()" mat-stroked-button>+ Adicionar Convidado</button>
-  }
-
-  @if (guests.length) {
-    <article>
-      <table mat-table [dataSource]="guests" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Nome</th>
-          <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-        </ng-container>
-        <ng-container matColumnDef="is_by_hellen">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Convidado da(o)</th>
-          <td mat-cell *matCellDef="let element"> {{ element.is_by_hellen ? 'Noiva' : 'Noivo' }} </td>
-        </ng-container>
-
-        @if (isLogged) {
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="primary" (click)="openEditDialog(element.id)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteGuest(element.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-        }
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </article>
-  }
+            <div>
+              <h4 class="font-semibold mb-2 text-[#1B2A41]">Categoria</h4>
+              <div class="flex flex-wrap gap-2">
+                @for (category of categories; track category) {
+                <button
+                  (click)="setSelectedCategory(category)"
+                  class="px-4 py-2 rounded-md border border-border hover:bg-[#800020] hover:text-white transition-colors"
+                  [class]="selectedCategory === category ? 'bg-[#1B2A41] text-white' : 'bg-white'"
+                >
+                  {{category}}
+                </button>
+                }
+              </div>
+            </div>
+  
+            <div>
+              <h4 class="font-semibold mb-2 text-[#1B2A41]">Mesa</h4>
+              <div class="flex flex-wrap gap-2">
+                <button
+                  (click)="setSelectedTable(null)"
+                  class="px-4 py-2 rounded-md border border-border hover:bg-[#800020] hover:text-white transition-colors"
+                  [class]="selectedTable === null ? 'bg-[#1B2A41] text-white' : 'bg-white'"
+                >
+                  Todas
+                </button>
+                @for (table of tableLayout; track table) {
+                <button
+                  (click)="setSelectedTable(table.table)"
+                  class="px-4 py-2 rounded-md border border-border hover:bg-[#800020] hover:text-white transition-colors"
+                  [class]="selectedTable === table.table ? 'bg-[#1B2A41] text-white' : 'bg-white'"
+                >
+                  Mesa {{table.table}}
+                </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- {/* Statistics */}
+        <Card class="bg-white border-border">
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <Users class="h-5 w-5" />
+              Estatísticas
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="space-y-3">
+            <div class="flex justify-between">
+              <span>Total de convidados:</span>
+              <span class="font-semibold">{mockGuests.length}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Confirmados:</span>
+              <span class="font-semibold text-green-600">
+                {mockGuests.filter((g) => g.confirmed === true).length}
+              </span>
+            </div>
+            <div class="flex justify-between">
+              <span>Pendentes:</span>
+              <span class="font-semibold text-yellow-600">
+                {mockGuests.filter((g) => g.confirmed === null).length}
+              </span>
+            </div>
+            <div class="flex justify-between">
+              <span>Não confirmados:</span>
+              <span class="font-semibold text-red-600">
+                {mockGuests.filter((g) => g.confirmed === false).length}
+              </span>
+            </div>
+          </CardContent>
+        </Card> -->
+      </div>
+  
+      <div class="lg:col-span-2 space-y-8">
+        <!-- <Card class="bg-white border-border">
+          <CardHeader>
+            <CardTitle class="flex items-center gap-2">
+              <MapPin class="h-5 w-5" />
+              Mapa das Mesas
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="relative bg-muted/30 rounded-lg p-8 h-80 overflow-hidden">
+              {/* Dance Floor */}
+              <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center border-2 border-accent/40">
+                <span class="text-xs font-semibold text-accent">Pista</span>
+              </div>
+  
+              {/* Tables */}
+              {tableLayout.map((table) => (
+                <div
+                  key={table.table}
+                  class={`absolute w-16 h-16 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all ${
+                    selectedTable === table.table
+                      ? "bg-primary text-primary-foreground border-primary scale-110"
+                      : "bg-white border-border hover:border-accent hover:scale-105"
+                  }`}
+                  style={{ left: `${table.x}%`, top: `${table.y}%` }}
+                  onClick={() => setSelectedTable(selectedTable === table.table ? null : table.table)}
+                >
+                  <span class="text-xs font-bold">{table.table}</span>
+                </div>
+              ))}
+  
+              {/* Legend */}
+              <div class="absolute bottom-2 left-2 text-xs text-muted-foreground">
+                <p>Clique nas mesas para filtrar convidados</p>
+              </div>
+            </div>
+  
+            {/* Table Details */}
+            {selectedTable && (
+              <div class="mt-4 p-4 bg-muted/50 rounded-lg">
+                <h4 class="font-semibold mb-2">
+                  Mesa {selectedTable} - {tableLayout.find((t) => t.table === selectedTable)?.category}
+                </h4>
+                <p class="text-sm text-muted-foreground">
+                  {tableLayout.find((t) => t.table === selectedTable)?.seats} lugares disponíveis
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card> -->
+  
+        <div class="bg-gray-50 rounded-md p-4 border border-border overflow-y-auto max-h-[calc(100vh-300px)]">
+          <div class="font-semibold text-lg text-[#1B2A41] mb-4">Lista de Convidados ({{guests.length}})</div>
+          <div>
+            <div class="space-y-3">
+              @for (guest of guests; track guest) {
+              <div
+                class="flex items-center justify-between p-4 bg-white border border-border rounded-lg hover:bg-gray-50 hover:shadow-lg transition-colors cursor-pointer duration-150">
+                <div class="flex items-center gap-4">
+                  <div>
+                    <h4 class="font-semibold">{{guest.name}}</h4>
+                    <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div class="capitalize">
+                        {{guest.category}}
+                      </div>
+                      <span>Mesa {{guest.table}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center gap-2 px-3 py-1 rounded-full"
+                    [class]="getConfirmationStatus(guest.confirmed).bg">
+                    <lucide-icon [img]="getConfirmationStatus(guest.confirmed).icon" class="h-4 w-4"
+                      [class]="getConfirmationStatus(guest.confirmed).color" />
+                    <span class="text-sm font-medium text-center" [class]="getConfirmationStatus(guest.confirmed).color">
+                      {{getConfirmationStatus(guest.confirmed).text}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              }
+  
+              @if (!filteredGuests.length) {
+              <div class="text-center py-8 text-muted-foreground">
+                <lucide-icon [img]="usersIcon" class="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>Nenhum convidado encontrado com os filtros selecionados.</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

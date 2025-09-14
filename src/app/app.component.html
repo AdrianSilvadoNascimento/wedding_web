@@ -1,8 +1,10 @@
-<main>
+<div class="app-container">
   <app-header class="sticky-header bg-background"></app-header>
   
-  <app-loading></app-loading>
-  <router-outlet></router-outlet>
+  <main class="main-content">
+    <app-loading></app-loading>
+    <router-outlet></router-outlet>
+  </main>
 
-  <app-footer></app-footer>
-</main>
+  <app-footer class="footer"></app-footer>
+</div>

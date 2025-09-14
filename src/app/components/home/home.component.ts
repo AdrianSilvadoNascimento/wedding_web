@@ -131,4 +131,18 @@ export class HomeComponent implements OnInit {
       animationDuration: `${8 + Math.random() * 4}s`
     }));
   }
+
+  generateCalendarEvent(): void {
+    // TODO: atualizar para a data real
+    const startDate = "20260906T130000Z"
+    const endDate = "20260906T160000Z"
+    const title = "Casamento Hellen & Adrian";
+    const details = "Cerimônia: Capela Santa Terezinha | Recepção: Quinta dos Sonhos";
+    const location = "Capela Santa Terezinha";
+
+    const query = `action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?${query}`;
+
+    window.open(googleCalendarUrl, "_blank");
+  }
 }

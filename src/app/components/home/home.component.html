@@ -112,6 +112,7 @@
       @for (card of quickCards; track card.title; let index = $index) {
       <div
         class="bg-white rounded-xl border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-500 cursor-pointer group"
+        [routerLink]="card.route"
         [style.animation-delay]="index * 150 + 'ms'">
         <div class="p-6 text-center">
           <lucide-icon [img]="card.icon"

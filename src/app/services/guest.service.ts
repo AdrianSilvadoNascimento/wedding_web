@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { GuestModel } from '../models/guest-model';
 import { environment } from '../../environments/environment';
+import { UtilsService } from '../utils/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +15,12 @@ export class GuestService {
   private guestsData: BehaviorSubject<GuestModel[]>
   $guestsData: Observable<GuestModel[]>
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private readonly utilsService: UtilsService) {
     const storedGuests = localStorage.getItem('guests')
     const parsedGuests = storedGuests ? JSON.parse(storedGuests) : []
 
     this.guestsData = new BehaviorSubject<GuestModel[]>(parsedGuests)
     this.$guestsData = this.guestsData.asObservable()
-  }
-
-  private useHeaders(isAdmin: boolean = false, isSkiping: boolean = false): HttpHeaders {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    })
-
-    if (isAdmin) headers = headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
-
-    return headers
   }
   
   private updateGuestsData(guestsData: GuestModel[]): void {
@@ -39,7 +29,7 @@ export class GuestService {
   }
 
   getGuests(): Observable<GuestModel[]> {
-    return this.http.get<GuestModel[]>(`${this.apiUrl}/`, { headers: this.useHeaders() }).pipe(
+    return this.http.get<GuestModel[]>(`${this.apiUrl}/`, { headers: this.utilsService.useHeaders({}) }).pipe(
       tap(res => this.updateGuestsData(res))
     )
   }
@@ -47,7 +37,7 @@ export class GuestService {
   createGuest(guest: GuestModel): Observable<GuestModel> {
     const storedGuests = localStorage.getItem('guests')
 
-    return this.http.post<GuestModel>(`${this.apiUrl}/create`, guest, { headers: this.useHeaders() }).pipe(
+    return this.http.post<GuestModel>(`${this.apiUrl}/create`, guest, { headers: this.utilsService.useHeaders({ isAdmin: true }) }).pipe(
       tap((res: GuestModel) => {
         let guests = storedGuests ? JSON.parse(storedGuests) : []
         guests.push(res)
@@ -60,7 +50,7 @@ export class GuestService {
   updateGuest(guestId: string, guest: GuestModel): Observable<GuestModel[]> {
     const storedGuests = localStorage.getItem('guests')
     
-    return this.http.put<GuestModel[]>(`${this.apiUrl}/update/${guestId}`, guest, { headers: this.useHeaders() }).pipe(
+    return this.http.put<GuestModel[]>(`${this.apiUrl}/update/${guestId}`, guest, { headers: this.utilsService.useHeaders({ isAdmin: true }) }).pipe(
       tap(res => {
         let guests = storedGuests ? JSON.parse(storedGuests) : []
         const index = guests.findIndex((g: GuestModel) => g.id === guestId)
@@ -72,7 +62,7 @@ export class GuestService {
   }
 
   deleteGuest(guestId: string): Observable<GuestModel[]> {
-    return this.http.delete<GuestModel[]>(`${this.apiUrl}/delete/${guestId}`, { headers: this.useHeaders() }).pipe(
+    return this.http.delete<GuestModel[]>(`${this.apiUrl}/delete/${guestId}`, { headers: this.utilsService.useHeaders({ isAdmin: true }) }).pipe(
       tap(res => this.updateGuestsData(res))
     )
   }

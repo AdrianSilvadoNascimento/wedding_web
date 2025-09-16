@@ -54,8 +54,12 @@ export class HeaderComponent implements OnInit {
     this.loginSubscription = this.loginService.$toggleLoggedIn.subscribe(
       (res) => {
         this.isLogged = res;
-        this.guestsRoute = this.isLogged ? '/admin/convidados' : '/convidados';
-        this.giftsRoute = this.isLogged ? '/admin/presentes' : '/presentes';
+
+        if (this.isLogged) {
+          this.guestsRoute = '/admin/convidados';
+          this.giftsRoute = '/admin/presentes';
+        }
+        
       }
     );
   }

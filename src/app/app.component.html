@@ -1,10 +1,14 @@
 <div class="app-container">
-  <app-header class="sticky-header bg-background"></app-header>
+  @if (isInviteGafa) {
+    <app-header class="sticky-header bg-background"></app-header>
+  }
   
   <main class="main-content">
     <app-loading></app-loading>
     <router-outlet></router-outlet>
   </main>
 
-  <app-footer class="footer"></app-footer>
+  @if (isInviteGafa) {
+    <app-footer class="footer"></app-footer>
+  }
 </div>

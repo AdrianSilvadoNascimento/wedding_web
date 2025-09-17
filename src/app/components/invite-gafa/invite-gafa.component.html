@@ -1,0 +1,41 @@
+<section class="relative h-screen bg-[#A67C52]">
+  <div class="invite-section cursor-pointer" (click)="openInvite()">
+    <img [src]="isOpened ? 'invite-gafa-opened.png' : 'invite-gafa-closed.png'" alt="Convite" />
+  </div>
+</section>
+
+@if (isOpened) {
+<section id="invite-gafa" class="h-screen w-full absolute inset-0 bg-black/30 p-2"
+  [class]="isOpened ? 'animate-fade-in-up duration-300' : 'duration-0'">
+  <div class="text-left text-[#A67C52] p-8 font-semibold text-xs h-full w-full flex flex-col justify-center rounded-md"
+    style="background-image: url('invite-gafa.png'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+    <p class="px-[32px]">
+      Oi Gabriela, tudo bem?
+      <br>
+      <br>
+
+      Quero compartilhar com você algo muito importante na minha vida. Tomei a decisão de me converter e seguir de
+      verdade
+      esse caminho de fé que sempre admirei. Esse é um passo muito especial para mim e, desde o início, quando comecei a
+      pensar nisso, veio você na minha mente.
+      <br>
+      <br>
+
+      Gabi, você é um exemplo de fé e luz. Sempre te admirei pela forma como você vive seus valores, pela sua entrega e
+      pelo seu coração generoso. Você me inspira a buscar Deus de uma forma sincera e bonita.
+      <br>
+      <br>
+
+      Por isso, quero te fazer um convite do fundo do meu coração: você aceita ser minha madrinha de batismo? Seria uma
+      alegria imensa ter você ao meu lado nesse momento tão importante, me guiando, me apoiando e sendo parte dessa nova
+      etapa da minha vida.
+      <br>
+      <br>
+
+      Com muito carinho,
+      <br>  
+      Adrian
+    </p>
+  </div>
+</section>
+}

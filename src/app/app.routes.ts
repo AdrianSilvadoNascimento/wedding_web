@@ -7,12 +7,14 @@ import { InviteComponent } from './components/invite/invite.component';
 import { LoginComponent } from './admin/auth/login/login.component';
 import { authGuard } from './admin/auth.guard';
 import { GodparentsComponent } from './components/godparents/godparents.component';
+import { InviteGafaComponent } from './components/invite-gafa/invite-gafa.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'convidados', component: GuestsListComponent },
   { path: 'presentes', component: GiftListComponent },
   { path: 'padrinhos', component: GodparentsComponent },
+  { path: 'gafa', component: InviteGafaComponent },
   { path: 'ela', component: InviteComponent },
   { path: 'ele', component: InviteComponent },
   { path: 'admin/login', component: LoginComponent },

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from "./components/footer/footer.component";
@@ -11,14 +11,6 @@ import { LoadingComponent } from './components/loading/loading.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'wedding-web';
-
-  isInviteGafa: boolean = false;
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.isInviteGafa = this.router.url.includes('gafa');
-  }
 }

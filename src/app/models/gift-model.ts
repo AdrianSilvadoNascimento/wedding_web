@@ -8,14 +8,14 @@ export class GiftModel {
   image!: string;
   link!: string;
   store!: string;
-  presentOwner!: PresentOwnerModel;
+  present_owner!: PresentOwnerModel;
 }
 
 export class PresentOwnerModel {
   id!: string;
   name!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
+  created_at!: Date;
+  updated_at!: Date;
 }
 
 export enum GiftStatus {

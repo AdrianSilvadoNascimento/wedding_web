@@ -1,6 +1,6 @@
 import { Component, inject, model, signal, LOCALE_ID } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -11,7 +11,7 @@ import { ShoppingCart, LucideAngularModule, ExternalLink } from 'lucide-angular'
 import { LoginService } from '../../services/login.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { GiftService } from '../../services/gift.service';
-import { GiftModel, GiftStatus, GiftStatusEnum } from '../../models/gift-model';
+import { GiftModel, GiftStatusEnum } from '../../models/gift-model';
 import { GiftSocketService } from '../../utils/gift-socket.service';
 import { UtilsService } from '../../utils/utils.service';
 import { PresentOwnerModalComponent } from '../present-owner-modal/present-owner-modal.component';
@@ -21,7 +21,7 @@ registerLocaleData(localePt);
 @Component({
   standalone: true,
   selector: 'app-gift-list',
-  imports: [MatButtonModule, CurrencyPipe, LucideAngularModule, PresentOwnerModalComponent],
+  imports: [MatButtonModule, CurrencyPipe, DatePipe, LucideAngularModule, PresentOwnerModalComponent],
   templateUrl: './gift_list.component.html',
   styleUrls: ['./gift_list.component.scss'],
   providers: [{
@@ -36,15 +36,13 @@ export class GiftListComponent {
   gifts: GiftModel[] = [];
   isLogged: boolean = false;
 
-  // Modal state
   isModalVisible = false;
   selectedGift: GiftModel | null = null;
 
-  // Timer para atualizar contador
   private timerInterval: any;
 
   private loginSubscription!: Subscription;
-  private giftStatusChangeSubscription!: Subscription;
+  private giftChangeSubscription!: Subscription;
 
   readonly description = signal('');
   readonly name = model('');
@@ -59,7 +57,7 @@ export class GiftListComponent {
 
   ngOnDestroy() {
     this.loginSubscription.unsubscribe();
-    this.giftStatusChangeSubscription.unsubscribe();
+    this.giftChangeSubscription.unsubscribe();
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
@@ -78,20 +76,26 @@ export class GiftListComponent {
 
     this.getGifts();
 
-    this.subscribeToGiftStatusChange();
+    this.subscribeToGiftChange();
     this.startTimer();
   }
 
-  subscribeToGiftStatusChange(): void {
-    this.giftStatusChangeSubscription = this.giftSocketService.onGiftStatusChange().subscribe({
-      next: (data) => {
-        const gift = this.gifts.find(p => p.id === data.giftId);
-        if (gift) gift.status = data.status;
+  subscribeToGiftChange(): void {
+    this.giftChangeSubscription = this.giftSocketService.onGiftChange().subscribe({
+      next: (updatedGift) => {
+        const giftIndex = this.gifts.findIndex(g => g.id === updatedGift.id);
+        if (giftIndex !== -1) {
+          this.gifts[giftIndex] = {
+            ...this.gifts[giftIndex],
+            ...updatedGift,
+            presentOwner: updatedGift.present_owner || null
+          };
+        }
 
         this.giftService.updateGiftsData(this.gifts);
       },
       error: (error) => {
-        console.error('Error subscribing to gift status change:', error);
+        console.error('Error subscribing to gift change:', error);
       }
     });
   }
@@ -158,10 +162,6 @@ export class GiftListComponent {
     });
   }
 
-  isSold(status: string): boolean {
-    return status === GiftStatusEnum.SOLD;
-  }
-
   cardButton(status: string): string {
     switch (status) {
       case GiftStatusEnum.AVAILABLE:
@@ -175,6 +175,11 @@ export class GiftListComponent {
       default:
         return 'Ver na Loja';
     }
+  }
+
+  openModal(gift: GiftModel) {
+    this.selectedGift = gift;
+    this.isModalVisible = true;
   }
 
   onViewStore(gift: GiftModel): void {
@@ -205,6 +210,14 @@ export class GiftListComponent {
     if (index !== -1) {
       this.gifts[index] = updatedGift;
     }
+  }
+
+  isSold(status: string): boolean {
+    return status === GiftStatusEnum.SOLD;
+  }
+
+  isReserved(status: string): boolean {
+    return status === GiftStatusEnum.RESERVED;
   }
 
   isBlocked(gift: GiftModel): boolean {

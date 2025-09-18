@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { GiftService } from '../../services/gift.service';
 import { GiftModel } from '../../models/gift-model';
 import { PresentOwnerRequest } from '../../models/present-owner-model';
+import { GuestModel } from '../../models/guest-model';
+import { GuestService } from '../../services/guest.service';
 
 @Component({
   selector: 'app-present-owner-modal',
@@ -18,6 +21,8 @@ export class PresentOwnerModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() success = new EventEmitter<GiftModel>();
 
+  guests: GuestModel[] = [];
+  
   presentOwnerForm: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -25,7 +30,8 @@ export class PresentOwnerModalComponent {
 
   constructor(
     private fb: FormBuilder,
-    private giftService: GiftService
+    private giftService: GiftService,
+    private guestService: GuestService
   ) {
     this.presentOwnerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -36,7 +42,8 @@ export class PresentOwnerModalComponent {
   }
 
   ngOnInit() {
-    // Observa mudanças no campo 'action' para mostrar/ocultar estimated_delivery
+    this.getGuests();
+
     this.presentOwnerForm.get('action')?.valueChanges.subscribe(action => {
       const estimatedDeliveryControl = this.presentOwnerForm.get('estimated_delivery');
       if (action === 'SOLD') {
@@ -46,6 +53,14 @@ export class PresentOwnerModalComponent {
       }
       estimatedDeliveryControl?.updateValueAndValidity();
     });
+  }
+
+  getGuests(): void {
+    this.guestService.$guestsData.subscribe({
+      next: (guests) => {
+        this.guests = guests;
+      }
+    })
   }
 
   onSubmit() {

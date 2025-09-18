@@ -16,10 +16,10 @@ export class GiftSocketService {
     this.socket = io(socketUrl);
   }
 
-  onGiftStatusChange(): Observable<any> {
+  onGiftChange(): Observable<any> {
     return new Observable((observer) => {
-      this.socket.on('giftStatusChange', (data) => {
-        observer.next(data);
+      this.socket.on('giftChange', (gift) => {
+        observer.next(gift);
       });
     });
   }

@@ -10,9 +10,9 @@
   </div>
 
   @if (isLogged) {
-    <button class="button" (click)="createGiftDialog()" mat-stroked-button>
-      + Adicionar Presente
-    </button>
+  <button class="button" (click)="createGiftDialog()" mat-stroked-button>
+    + Adicionar Presente
+  </button>
   }
 
   <section class="mb-16 max-w-7xl mx-auto px-4 py-8">
@@ -22,46 +22,54 @@
         [class.opacity-75]="isSold(gift.status)">
         <div class="p-0">
           <div class="relative image-container">
-            <img [src]="gift.image || '/placeholder.png'" [alt]="gift.name"
-              class="w-full h-48 rounded-t-lg"
+            <img [src]="gift.image || '/placeholder.png'" [alt]="gift.name" class="w-full h-48 rounded-t-lg"
               [class]="gift.image ? 'object-contain object-center' : 'object-cover'" />
-            <div class="absolute top-3 right-3" [class]="utilsService.badgeGiftStatus(gift.status).style">{{utilsService.badgeGiftStatus(gift.status).label}}</div>
+            <div class="absolute top-3 right-3" [class]="utilsService.badgeGiftStatus(gift.status).style">
+              {{utilsService.badgeGiftStatus(gift.status).label}}</div>
           </div>
 
           <div class="p-6">
             <h3 class="text-xl font-heading font-bold text-foreground mb-2">{{gift.name}}</h3>
             <p class="text-sm text-gray-500 mb-4">{{gift.description}}</p>
-            
+
             <!-- Contador de tempo para desbloqueio -->
             @if (isBlocked(gift)) {
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
               <div class="flex items-center">
                 <svg class="w-4 h-4 text-yellow-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                  <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clip-rule="evenodd"></path>
                 </svg>
                 <div class="text-sm">
                   <span class="text-yellow-800 font-medium">Alguém está analisando este presente</span>
                   <div class="text-yellow-600">
                     @if (gift.blocked_at) {
-                      <span>
-                        Libera em: <span class="font-mono font-bold">{{getTimeRemaining(gift.blocked_at)}}min</span>
-                      </span>
+                    <span>
+                      Libera em: <span class="font-mono font-bold">{{getTimeRemaining(gift.blocked_at)}}min</span>
+                    </span>
                     }
 
-                    @if (getTimeRemaining(gift.blocked_at) <= 0) {
-                      <span class="text-red-600">
-                        Será liberado em breve...
+                    @if (getTimeRemaining(gift.blocked_at) <= 0) { <span class="text-red-600">
+                      Será liberado em breve...
                       </span>
-                    }
+                      }
                   </div>
                 </div>
               </div>
             </div>
             }
 
-            @if (isSold(gift.status) && gift.presentOwner.name) {
+            @if (isSold(gift.status) && gift.present_owner.name) {
             <p class="text-sm text-gray-500 mb-3 italic">
-              Comprado por: <span class="font-semibold text-foreground">{{gift.presentOwner.name}}</span>
+              Comprado por: <span class="font-semibold text-foreground">{{gift.present_owner.name}}</span>
+            </p>
+            }
+
+            @if (isReserved(gift.status) && gift.present_owner.name) {
+            <p class="text-sm text-gray-500 mb-3 italic">
+              Reservado por: <span class="font-semibold text-foreground">{{gift.present_owner.name}} em:
+                {{gift.present_owner.created_at | date:'dd/MM/yyyy'}}</span>
             </p>
             }
 
@@ -71,20 +79,16 @@
             </div>
 
             @if (gift.link) {
-              <button 
-                type="button"
-                class="w-full flex justify-center items-center gap-4 bg-[#1B2A41] text-white rounded-lg p-2 hover:bg-[#1B2A41]/80 transition-all duration-300"
-                [class.bg-gray-400]="!isGiftAvailable(gift.status)"
-                [class.hover:bg-gray-500]="!isGiftAvailable(gift.status)"
-                [class.cursor-not-allowed]="!isGiftAvailable(gift.status)"
-                [disabled]="!isGiftAvailable(gift.status)"
-                (click)="onViewStore(gift)"
-                style="z-index: 20; position: relative;"
-              >
-                <lucide-icon [img]="shoppingCartIcon" class="h-4 w-4" />
-                {{cardButton(gift.status)}}
-                <lucide-icon [img]="externalLinkIcon" class="h-4 w-4" />
-              </button>
+            <button type="button"
+              class="w-full flex justify-center items-center gap-4 bg-[#1B2A41] text-white rounded-lg p-2 hover:bg-[#1B2A41]/80 transition-all duration-300"
+              [class.bg-gray-400]="!isGiftAvailable(gift.status)"
+              [class.hover:bg-gray-500]="!isGiftAvailable(gift.status)"
+              [class.cursor-not-allowed]="!isGiftAvailable(gift.status)" [disabled]="!isGiftAvailable(gift.status)"
+              (click)="onViewStore(gift)" style="z-index: 20; position: relative;">
+              <lucide-icon [img]="shoppingCartIcon" class="h-4 w-4" />
+              {{cardButton(gift.status)}}
+              <lucide-icon [img]="externalLinkIcon" class="h-4 w-4" />
+            </button>
             }
           </div>
         </div>
@@ -95,9 +99,5 @@
 </section>
 
 <!-- Present Owner Modal -->
-<app-present-owner-modal
-  [gift]="selectedGift"
-  [isVisible]="isModalVisible"
-  (close)="onModalClose()"
-  (success)="onModalSuccess($event)"
-></app-present-owner-modal>
+<app-present-owner-modal [gift]="selectedGift" [isVisible]="isModalVisible" (close)="onModalClose()"
+  (success)="onModalSuccess($event)"></app-present-owner-modal>

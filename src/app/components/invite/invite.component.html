@@ -1,9 +1,13 @@
 <section id="invite">
   <div class="invite-section">
-    <img
-      [src]="isOpened ? 'envelope-aberto.png' : 'envelope.png'"
-      (click)="openInvite()"
-      alt="Convite"
-    />
+    <div class="envelope-wrapper" tabindex="0"
+         [class.shaking]="isOpening" 
+         [class.opened]="isOpened" 
+         (click)="openInvite()">
+      <img
+        [src]="isOpened ? 'envelope-aberto.png' : 'envelope.png'"
+        alt="Convite"
+      />
+    </div>
   </div>
 </section>

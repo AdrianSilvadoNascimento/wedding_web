@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
   weddingDate = new Date('2026-09-06');
 
   cards: { icon: any, title: string, content: string[] }[] = [
-    { icon: Calendar, title: 'Data & Horário', content: ['06 de Setembro de 2026', 'Cerimonia: 10:00h', 'Reception: 14:00h'] },
-    { icon: MapPin, title: 'Localização', content: ['Cerimonia: Capela Santa Terezinha'] },
+    { icon: Calendar, title: 'Data & Horário', content: ['N/A', 'Cerimônia: 10:00h', 'Recepção: 14:00h'] },
+    { icon: MapPin, title: 'Localização', content: ['N/A'] },
     { icon: Clock, title: 'Dress Code', content: ['Traje Esporte Fino', 'Cores sugeridas:', 'Azul Marinho, Bordô, Cinza'] },
   ]
 

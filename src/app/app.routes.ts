@@ -8,6 +8,7 @@ import { LoginComponent } from './admin/auth/login/login.component';
 import { authGuard } from './admin/auth.guard';
 import { GodparentsComponent } from './components/godparents/godparents.component';
 import { InviteGafaComponent } from './components/invite-gafa/invite-gafa.component';
+import { InviteCoracaoComponent } from './components/invite-coracao/invite-coracao.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'presentes', component: GiftListComponent },
   { path: 'padrinhos', component: GodparentsComponent },
   { path: 'gafa', component: InviteGafaComponent },
+  { path: 'coracao', component: InviteCoracaoComponent },
   { path: 'ela', component: InviteComponent },
   { path: 'ele', component: InviteComponent },
   { path: 'admin/login', component: LoginComponent },

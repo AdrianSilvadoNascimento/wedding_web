@@ -1,18 +1,12 @@
 import { Component } from '@angular/core';
 
+import { InviteMessageComponent } from '../invite-message/invite-message.component';
+
 @Component({
   selector: 'app-invite-gafa',
   standalone: true,
-  imports: [],
+  imports: [InviteMessageComponent],
   templateUrl: './invite-gafa.component.html',
   styleUrl: './invite-gafa.component.scss'
 })
-export class InviteGafaComponent {
-  isOpened: boolean = false;
-
-  openInvite(): void {
-    setTimeout(() => {
-      this.isOpened = !this.isOpened;
-    }, 150);
-  }
-}
+export class InviteGafaComponent {}

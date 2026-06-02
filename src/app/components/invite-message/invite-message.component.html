@@ -1,0 +1,42 @@
+<section class="invite-page" [class.is-letter]="variant === 'letter'">
+  @if (!isOpened) {
+  <div class="envelope-wrapper" tabindex="0" role="button" [attr.aria-label]="alt"
+    (click)="openInvite()" (keydown.enter)="openInvite()" (keydown.space)="openInvite()">
+    <img [src]="closedImage" [alt]="alt" />
+    <span class="open-hint">Toque para abrir</span>
+  </div>
+  } @else {
+  <div class="surface-wrapper" [class.letter-wrapper]="variant === 'letter'"
+    [class.paper-wrapper]="variant === 'paper'">
+    <article class="surface" [class.letter]="variant === 'letter'" [class.paper]="variant === 'paper'"
+      [style.background-image]="variant === 'paper' ? 'url(' + paperImage + ')' : null">
+
+      @if (variant === 'letter') {
+      <header class="letter-head">
+        <span class="seal" aria-hidden="true">&#10084;</span>
+        @if (monogram) {
+        <p class="monogram">{{ monogram }}</p>
+        }
+        <span class="rule"></span>
+      </header>
+      }
+
+      <div class="surface-body" [class.letter-body]="variant === 'letter'"
+        [class.paper-content]="variant === 'paper'">
+        @if (variant === 'letter' && greeting) {
+        <p class="greeting">{{ greeting }}</p>
+        }
+
+        <ng-content></ng-content>
+
+        @if (variant === 'letter' && signature) {
+        <p class="signature">
+          @if (signoff) {<span class="signoff">{{ signoff }}</span><br>}
+          <span class="sign">{{ signature }}</span>
+        </p>
+        }
+      </div>
+    </article>
+  </div>
+  }
+</section>

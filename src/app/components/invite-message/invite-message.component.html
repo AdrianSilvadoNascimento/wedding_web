@@ -1,7 +1,8 @@
-<section class="invite-page" [class.is-letter]="variant === 'letter'">
+<section class="invite-page" [class.is-letter]="variant === 'letter'" (click)="onBackdropClick($event)">
   @if (!isOpened) {
-  <div class="envelope-wrapper" tabindex="0" role="button" [attr.aria-label]="alt"
-    (click)="openInvite()" (keydown.enter)="openInvite()" (keydown.space)="openInvite()">
+  <div class="envelope-wrapper" [class.is-opening]="isOpening" tabindex="0" role="button" [attr.aria-label]="alt"
+    (click)="openInvite()" (keydown.enter)="openInvite()"
+    (keydown.space)="$event.preventDefault(); openInvite()">
     <img [src]="closedImage" [alt]="alt" />
     <span class="open-hint">Toque para abrir</span>
   </div>
@@ -13,7 +14,9 @@
 
       @if (variant === 'letter') {
       <header class="letter-head">
-        <span class="seal" aria-hidden="true">&#10084;</span>
+        @if (displaySeal) {
+        <span class="seal" aria-hidden="true">{{ displaySeal }}</span>
+        }
         @if (monogram) {
         <p class="monogram">{{ monogram }}</p>
         }
@@ -21,8 +24,7 @@
       </header>
       }
 
-      <div class="surface-body" [class.letter-body]="variant === 'letter'"
-        [class.paper-content]="variant === 'paper'">
+      <div class="surface-body" [class.letter-body]="variant === 'letter'" [class.paper-content]="variant === 'paper'">
         @if (variant === 'letter' && greeting) {
         <p class="greeting">{{ greeting }}</p>
         }

@@ -9,14 +9,16 @@ import { authGuard } from './admin/auth.guard';
 import { GodparentsComponent } from './components/godparents/godparents.component';
 import { InviteGafaComponent } from './components/invite-gafa/invite-gafa.component';
 import { InviteCoracaoComponent } from './components/invite-coracao/invite-coracao.component';
+import { InviteChandlerComponent } from './components/invite-chandler/invite-chandler.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'convidados', component: GuestsListComponent },
   { path: 'presentes', component: GiftListComponent },
   { path: 'padrinhos', component: GodparentsComponent },
-  { path: 'gafa', component: InviteGafaComponent },
-  { path: 'coracao', component: InviteCoracaoComponent },
+  { path: 'gafa', component: InviteGafaComponent, title: 'Um convite especial 💌', data: { chromeless: true } },
+  { path: 'coracao', component: InviteCoracaoComponent, title: 'Um convite especial 💌', data: { chromeless: true } },
+  { path: 'chandler', component: InviteChandlerComponent, title: 'Um convite especial 💌', data: { chromeless: true } },
   { path: 'ela', component: InviteComponent },
   { path: 'ele', component: InviteComponent },
   { path: 'admin/login', component: LoginComponent },

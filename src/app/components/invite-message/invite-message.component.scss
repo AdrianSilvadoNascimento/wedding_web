@@ -11,7 +11,8 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  background: #a67c52;
+  /* Soft warm spotlight so the stationery reads like mail on a table. */
+  background: radial-gradient(circle at 50% 30%, #b98e63 0%, #9a6f47 60%, #875f3a 100%);
   box-sizing: border-box;
 }
 
@@ -21,7 +22,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.1rem;
   outline: none;
   animation: fade-in 0.4s ease both;
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -31,13 +32,18 @@
     width: auto;
     max-width: min(90vw, 460px);
     max-height: 70vh;
-    border-radius: 6px;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 16px 28px rgba(40, 25, 10, 0.35));
+    animation: levitate 4s ease-in-out infinite;
   }
 
   &:hover,
   &:focus-visible {
     transform: scale(1.03) translateY(-4px);
+  }
+
+  &:focus-visible {
+    border-radius: 8px;
+    box-shadow: 0 0 0 3px rgba(253, 250, 242, 0.55);
   }
 
   .open-hint {
@@ -47,6 +53,18 @@
     text-transform: uppercase;
     opacity: 0.85;
     animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  /* Exit choreography: envelope lifts and fades before the letter appears. */
+  &.is-opening {
+    pointer-events: none;
+    animation: envelope-out 0.55s ease-in both;
+
+    .open-hint {
+      animation: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
   }
 }
 
@@ -67,6 +85,10 @@
   background-position: center;
   min-height: min(82vh, 640px);
   display: flex;
+  border-radius: 4px;
+  box-shadow:
+    0 18px 40px rgba(40, 25, 10, 0.3),
+    0 2px 6px rgba(40, 25, 10, 0.18);
 }
 
 .paper-content {
@@ -112,11 +134,6 @@
 }
 
 /* ---------- Opened: letter / mail variant ---------- */
-.invite-page.is-letter {
-  /* A soft warm backdrop so the ivory sheet reads like mail on a table. */
-  background: radial-gradient(circle at 50% 30%, #b98e63 0%, #9a6f47 60%, #875f3a 100%);
-}
-
 .letter-wrapper {
   width: 100%;
   max-width: 480px;
@@ -157,16 +174,27 @@
   padding: clamp(1.5rem, 6%, 2.25rem) clamp(1.75rem, 8%, 2.75rem) 0.5rem;
   text-align: center;
 
+  /* Wax seal: a small embossed disc instead of a flat glyph. */
   .seal {
-    display: inline-block;
-    font-size: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 28%, #d65b49 0%, #b13a2a 55%, #93291c 100%);
+    color: #fdf3ec;
+    font-size: 1.2rem;
     line-height: 1;
-    color: #c0392b;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+    box-shadow:
+      inset 0 0 0 3px rgba(255, 245, 235, 0.18),
+      inset 0 -2px 4px rgba(60, 10, 5, 0.35),
+      0 3px 7px rgba(40, 25, 10, 0.3);
+    text-shadow: 0 1px 2px rgba(60, 10, 5, 0.4);
   }
 
   .monogram {
-    margin: 0.6rem 0 0;
+    margin: 0.7rem 0 0;
     font-family: var(--font-playfair);
     font-size: clamp(1.05rem, 0.9rem + 1vw, 1.35rem);
     font-weight: 600;
@@ -197,6 +225,14 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(150, 95, 60, 0.4) transparent;
 
+  /* Scroll shadows (background-attachment trick): soft cues appear only while
+     there is hidden content above/below, hinting that the letter continues. */
+  background:
+    linear-gradient(#fdfaf2 30%, rgba(253, 250, 242, 0)) center top / 100% 42px no-repeat local,
+    linear-gradient(rgba(253, 250, 242, 0), #fdfaf2 70%) center bottom / 100% 42px no-repeat local,
+    radial-gradient(farthest-side at 50% 0, rgba(90, 60, 35, 0.16), transparent) center top / 100% 14px no-repeat scroll,
+    radial-gradient(farthest-side at 50% 100%, rgba(90, 60, 35, 0.16), transparent) center bottom / 100% 14px no-repeat scroll;
+
   &::-webkit-scrollbar { width: 5px; }
   &::-webkit-scrollbar-thumb {
     background: rgba(150, 95, 60, 0.32);
@@ -207,8 +243,16 @@
     margin: 0 0 1.1rem;
     font-family: var(--font-playfair);
     font-weight: 400;
+    animation: fade-in-up 0.7s ease both;
   }
   ::ng-deep p:last-child { margin-bottom: 0; }
+
+  /* Staggered entrance so the letter feels like it is being read, not dumped. */
+  ::ng-deep p:nth-child(1) { animation-delay: 0.15s; }
+  ::ng-deep p:nth-child(2) { animation-delay: 0.3s; }
+  ::ng-deep p:nth-child(3) { animation-delay: 0.45s; }
+  ::ng-deep p:nth-child(4) { animation-delay: 0.6s; }
+  ::ng-deep p:nth-child(n + 5) { animation-delay: 0.75s; }
 
   ::ng-deep .question {
     margin-top: 1.4rem;
@@ -257,4 +301,26 @@
 @keyframes pulse {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
+}
+
+@keyframes levitate {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes envelope-out {
+  to {
+    opacity: 0;
+    transform: scale(1.08) translateY(-16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invite-page *,
+  .invite-page *::before,
+  .invite-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
